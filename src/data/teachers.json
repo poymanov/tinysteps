@@ -959,13 +959,13 @@
         "10:00": false,
         "12:00": false,
         "14:00": false,
-        "16:00": false,
+        "16:00": true,
         "18:00": false,
         "20:00": false,
         "22:00": false
       },
       "thu": {
-        "8:00": true,
+        "8:00": false,
         "10:00": false,
         "12:00": false,
         "14:00": false,

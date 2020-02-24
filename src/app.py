@@ -20,6 +20,14 @@ def goal(goal):
     return render_template('goal.html', teachers=teachers, goal_title=goal_title)
 
 
+@app.route('/profiles/<id>/')
+def profile(id):
+    teacher = teachers_service.get_teacher_by_id(id)
+    goals = teachers_service.get_teacher_goals(teacher)
+    free_hours = teachers_service.get_teacher_free_hours(teacher)
+    return render_template('profile.html', teacher=teacher, goals=goals, free_hours=free_hours)
+
+
 @app.context_processor
 def global_data():
     return dict(goals=goals_service.get_goals())
