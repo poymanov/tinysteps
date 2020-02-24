@@ -1,9 +1,10 @@
-import json
 import random
+
+import services.json_reader as json_reader
 
 
 def get_random_teachers(count):
-    teachers = json.loads(read_json())
+    teachers = json_reader.load_json(json_reader.read_json('data/teachers.json'))
     random_teachers = {}
     teachers_length = len(teachers)
 
@@ -20,8 +21,3 @@ def get_random_teachers(count):
         random_teachers[random_teacher_id] = teachers[random_teacher_id]
 
     return random_teachers.values()
-
-
-def read_json():
-    with open('data/teachers.json') as file:
-        return file.read()

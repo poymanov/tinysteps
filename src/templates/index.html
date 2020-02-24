@@ -6,35 +6,22 @@
         онлайн</strong></h1>
     <div class="text-center mb-5">
         <div class="btn-group mx-auto mb-0" role="group" aria-label="Basic example">
-            <a href="goal.html" class="btn btn-outline-secondary">⛱ Для путешествий</a>
-            <a href="goal.html" class="btn btn-outline-secondary">🏫 Для школы</a>
-            <a href="goal.html" class="btn btn-outline-secondary">🏢 Для работы</a>
-            <a href="goal.html" class="btn btn-outline-secondary">🚜 Для переезда</a>
+            {% for id, goal in goals.items() %}
+                <a href="/goals/{{ id }}/" class="btn btn-outline-secondary">⛱{{ goal }}</a>
+            {% endfor %}
         </div>
     </div>
+
     <h2 class="h5 text-center mb-5">Свободны прямо сейчас</h2>
     <div class="row">
         <div class="col-12 col-lg-10 offset-lg-1 m-auto">
             {% for teacher in teachers %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-3"><img src="{{ teacher.picture }}" class="img-fluid" alt="{{ teacher.name }}">
-                        </div>
-                        <div class="col-9">
-                            <p class="float-right">Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} /
-                                час</p>
-                            <h2 class="h4">{{ teacher.name }}</h2>
-                            <p>{{ teacher.about }}</p>
-                            <a href="profile.html" class="btn btn-outline-primary btn-sm mr-3 mb-2">Показать информация
-                                и
-                                расписание</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                {% with teacher=teacher %}
+                    {% include 'layout/_teacher.html' %}
+                {% endwith %}
             {% endfor %}
         </div>
     </div>
+    {% include 'layout/_request.html' %}
 </main>
 {% endblock %}
