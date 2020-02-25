@@ -5,30 +5,30 @@
     <div class="card my-4 mx-auto">
         <div class="card-body m-2 m-md-4">
             <article class="row">
-                <div class="col-5"><img src="{{ teacher.picture }}" class="img-fluid" alt="{{ teacher.name }}"></div>
+                <div class="col-5"><img src="{{ params.teacher.picture }}" class="img-fluid" alt="{{ params.teacher.name }}"></div>
                 <div class="col-7">
                     <section class="teacher=info">
-                        <h1 class="h2">{{ teacher.name }}</h1>
+                        <h1 class="h2">{{ params.teacher.name }}</h1>
                         <p>
-                            {% for goal in goals %}
+                            {% for goal in params.goals %}
                                 <span class="badge badge-secondary mr-2">{{ goal }}</span>
                             {% endfor %}
 
-                          Рейтинг: {{ teacher.rating }} Ставка: {{ teacher.price }} / час</p>
-                        <p>{{ teacher.about }}</p>
+                          Рейтинг: {{ params.teacher.rating }} Ставка: {{ params.teacher.price }} / час</p>
+                        <p>{{ params.teacher.about }}</p>
                     </section>
 
                     <section class="available">
                         <h4 class="mb-4 mt-5">Записаться на пробный урок</h4>
 
-                        {% for day in free_hours %}
+                        {% for day in params.free_hours %}
                             <h6 class="mt-4">{{ day.title }}</h6>
 
                             {% if day.hours | length == 0 %}
                                 <p>Нет свободных уроков</p>
                             {% else %}
                                 {% for hour in day.hours %}
-                                    <a href="/booking/{{ teacher.id }}/{{ day.link }}/{{ hour.link }}/" class="btn btn-outline-success mr-2">{{ hour.title }} свободно</a>
+                                    <a href="/booking/{{ params.teacher.id }}/{{ day.link }}/{{ hour.link }}/" class="btn btn-outline-success mr-2">{{ hour.title }} свободно</a>
                                 {% endfor %}
                             {% endif %}
                         {% endfor %}

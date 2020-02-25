@@ -25,7 +25,7 @@ def dump_json(data):
 
 
 def create_file(file_path):
-    if not os.path.exists(os.path.dirname(file_path)):
-        os.makedirs(os.path.dirname(file_path))
+    if not os.path.exists(os.path.dirname(file_path)) or not os.path.exists(file_path):
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, "w") as f:
             f.write(dump_json([]))

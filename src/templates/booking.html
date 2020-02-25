@@ -6,17 +6,17 @@
         <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
             <form method="post" class="card mb-3">
                 <div class="card-body text-center pt-5">
-                    <img src="{{ teacher.picture }}" class="mb-3" width="95" alt="{{ teacher.name }}">
-                    <h2 class="h5 card-title mt-2 mb-2">{{ teacher.name }}</h2>
+                    <img src="{{ params.teacher.picture }}" class="mb-3" width="95" alt="{{ params.teacher.name }}">
+                    <h2 class="h5 card-title mt-2 mb-2">{{ params.teacher.name }}</h2>
                     <p class="my-1">Запись на пробный урок</p>
-                    <p class="my-1">{{ day.title }}, {{ hour }}:00</p>
+                    <p class="my-1">{{ params.day.title }}, {{ params.hour }}:00</p>
                 </div>
                 <hr/>
                 <div class="card-body mx-3">
                     <div class="row">
-                        <input class="form-control" type="hidden" name="clientWeekday" value="{{ day.id }}">
-                        <input class="form-control" type="hidden" name="clientTime" value="{{ hour }}:00">
-                        <input class="form-control" type="hidden" name="clientTeacher" value="{{ teacher.id }}">
+                        <input class="form-control" type="hidden" name="clientWeekday" value="{{ params.day.id }}">
+                        <input class="form-control" type="hidden" name="clientTime" value="{{ params.hour }}">
+                        <input class="form-control" type="hidden" name="clientTeacher" value="{{ params.teacher.id }}">
                     </div>
 
                     <label class="mb-1 mt-2" for="clientName">Вас зовут</label>

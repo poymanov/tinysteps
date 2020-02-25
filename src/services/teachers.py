@@ -25,6 +25,18 @@ def get_random_teachers(count):
     return random_teachers.values()
 
 
+def get_teacher_by_goal(goal):
+    teachers = get_teachers()
+    goal_teachers = []
+
+    for teacher in teachers:
+        if goal not in teacher.get('goals'):
+            continue
+        goal_teachers.append(teacher)
+
+    return goal_teachers
+
+
 def get_teacher_by_id(teacher_id):
     teachers = get_teachers()
 
