@@ -1,6 +1,7 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request
 
+import services.days as days_service
+import services.feedback as feedback_service
 import services.goals as goals_service
 import services.teachers as teachers_service
 
@@ -26,6 +27,18 @@ def profile(id):
     goals = teachers_service.get_teacher_goals(teacher)
     free_hours = teachers_service.get_teacher_free_hours(teacher)
     return render_template('profile.html', teacher=teacher, goals=goals, free_hours=free_hours)
+
+
+@app.route('/booking/<teacher_id>/<day_title>/<hour>/', methods=['POST', 'GET'])
+def booking(teacher_id, day_title, hour):
+    day = days_service.get_day_by_title(day_title)
+    if request.method == 'POST':
+        feedback_service.save_teacher_booking(request.form)
+        return render_template('booking_done.html', hour=hour, day=day, client_name=request.form.get('clientName'),
+                               client_phone=request.form.get('clientPhone'))
+    else:
+        teacher = teachers_service.get_teacher_by_id(teacher_id)
+        return render_template('booking.html', teacher=teacher, hour=hour, day=day)
 
 
 @app.context_processor

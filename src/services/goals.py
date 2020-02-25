@@ -1,8 +1,8 @@
-import services.json_reader as json_reader
+import services.json_manager as json_manager
 
 
 def get_goals():
-    return json_reader.load_json(json_reader.read_json('data/goals.json'))
+    return json_manager.load_json(json_manager.read_json('data/goals.json'))
 
 
 def get_goal_title(goal):

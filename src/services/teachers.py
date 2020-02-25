@@ -2,7 +2,7 @@ import random
 
 import services.days as days_service
 import services.goals as goals_service
-import services.json_reader as json_reader
+import services.json_manager as json_manager
 
 
 def get_random_teachers(count):
@@ -69,4 +69,4 @@ def get_teacher_free_hours(teacher):
 
 
 def get_teachers():
-    return json_reader.load_json(json_reader.read_json('data/teachers.json'))
+    return json_manager.load_json(json_manager.read_json('data/teachers.json'))

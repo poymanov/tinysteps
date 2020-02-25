@@ -1,4 +1,4 @@
-import services.json_reader as json_reader
+import services.json_manager as json_manager
 
 
 def get_day_by_id(day_id):
@@ -11,5 +11,15 @@ def get_day_by_id(day_id):
     return None
 
 
+def get_day_by_title(title):
+    days = get_days()
+
+    for day in days:
+        if day['link_title'] == title:
+            return day
+
+    return None
+
+
 def get_days():
-    return json_reader.load_json(json_reader.read_json('data/days.json'))
+    return json_manager.load_json(json_manager.read_json('data/days.json'))
