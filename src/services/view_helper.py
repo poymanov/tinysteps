@@ -9,10 +9,10 @@ def get_index_params():
     }
 
 
-def get_goal_params(goal):
+def get_goal_params(goal_id):
     return {
-        'teachers': teachers_service.get_teacher_by_goal(goal),
-        'goal_title': goals_service.get_goal_title(goal)
+        'teachers': teachers_service.get_teacher_by_goal(goal_id),
+        'goal': goals_service.get_goal(goal_id)
     }
 
 
@@ -52,5 +52,5 @@ def get_request_done_params(request):
         'client_name': request.form.get('clientName'),
         'client_phone': request.form.get('clientPhone'),
         'time': request.form.get('time'),
-        'goal_title': goals_service.get_goal_title(request.form.get('goal'))
+        'goal_title': goals_service.get_goal(request.form.get('goal')).get('title')
     }

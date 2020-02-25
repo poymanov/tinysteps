@@ -53,7 +53,7 @@ def get_teacher_goals(teacher):
     all_goals = goals_service.get_goals()
 
     for teacher_goal in teacher.get('goals'):
-        goals.append(all_goals.get(teacher_goal))
+        goals.append(all_goals.get(teacher_goal).get('title'))
 
     return goals
 
