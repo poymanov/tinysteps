@@ -33,7 +33,7 @@ def get_booking_params(teacher_id, hour, day_title):
 
     return {
         'teacher': teacher,
-        'hour': "{}:00".format(hour),
+        'hour': "{}".format(hour),
         'day': days_service.get_day_by_title(day_title)
     }
 
