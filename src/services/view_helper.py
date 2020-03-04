@@ -1,6 +1,8 @@
 import services.days as days_service
 import services.goals as goals_service
 import services.teachers as teachers_service
+from forms import BookingForm
+from forms import RequestForm
 
 
 def get_index_params():
@@ -29,21 +31,30 @@ def get_profile_params(id):
 
 
 def get_booking_params(teacher_id, hour, day_title):
+    form = BookingForm()
     teacher = teachers_service.get_teacher_by_id(teacher_id)
 
     return {
+        'form': form,
         'teacher': teacher,
         'hour': "{}".format(hour),
         'day': days_service.get_day_by_title(day_title)
     }
 
 
-def get_booking_done_params(day_title, hour, request):
+def get_booking_done_params(form):
     return {
-        'hour': '{}:00'.format(hour),
-        'day': days_service.get_day_by_title(day_title),
-        'client_name': request.form.get('clientName'),
-        'client_phone': request.form.get('clientPhone')
+        'hour': '{}:00'.format(form.clientTime.data),
+        'day': days_service.get_day_by_id(form.clientWeekday.data),
+        'client_name': form.clientName.data,
+        'client_phone': form.clientPhone.data
+    }
+
+
+def get_request_params():
+    form = RequestForm()
+    return {
+        'form': form,
     }
 
 

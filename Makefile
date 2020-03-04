@@ -1,4 +1,4 @@
-.PHONY : start stop logs flush
+.PHONY : start stop logs flush init
 
 .DEFAULT_GOAL := start
 
@@ -10,6 +10,9 @@ stop:
 
 logs:
 	docker-compose logs -f
+
+init:
+	cp .env.example .env
 
 flush:
 	docker-compose down -v --rmi all

@@ -1,10 +1,17 @@
+import os
+
 from flask import Flask, render_template, request
+from flask_wtf.csrf import CSRFProtect
 
 import services.feedback as feedback_service
 import services.goals as goals_service
 import services.view_helper as view_helper
+from forms import BookingForm, RequestForm
 
 app = Flask(__name__)
+app.secret_key = os.environ['SECRET_KEY']
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 
 
 @app.route('/')
@@ -22,23 +29,39 @@ def profile(id):
     return render_template('profile.html', params=view_helper.get_profile_params(id))
 
 
-@app.route('/booking/<teacher_id>/<day_title>/<hour>/', methods=['POST', 'GET'])
+@app.route('/booking/<teacher_id>/<day_title>/<hour>/', methods=['GET'])
+def booking_form(teacher_id, day_title, hour):
+    return render_template('booking.html', params=view_helper.get_booking_params(teacher_id, hour, day_title))
+
+
+@app.route('/booking/<teacher_id>/<day_title>/<hour>/', methods=['POST'])
 def booking(teacher_id, day_title, hour):
-    if request.method == 'POST':
+    form = BookingForm()
+
+    if form.validate_on_submit():
         feedback_service.save_teacher_booking(request.form)
-        return render_template('booking_done.html',
-                               params=view_helper.get_booking_done_params(day_title, hour, request))
+        params = view_helper.get_booking_done_params(form)
+        return render_template('booking_done.html', params=params)
     else:
-        return render_template('booking.html', params=view_helper.get_booking_params(teacher_id, hour, day_title))
+        params = view_helper.get_booking_params(teacher_id, hour, day_title)
+        params['form'] = form
+        return render_template('booking.html', params=params)
 
 
-@app.route('/request/', methods=['POST', 'GET'])
+@app.route('/request/', methods=['GET'])
+def teacher_request_form():
+    return render_template('request.html', params=view_helper.get_request_params())
+
+
+@app.route('/request/', methods=['POST'])
 def teacher_request():
-    if request.method == 'POST':
+    form = RequestForm()
+
+    if form.validate_on_submit():
         feedback_service.save_teacher_request(request.form)
         return render_template('request_done.html', params=view_helper.get_request_done_params(request))
     else:
-        return render_template('request.html')
+        return render_template('request.html', params={'form': form})
 
 
 @app.context_processor

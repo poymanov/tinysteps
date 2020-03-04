@@ -4,7 +4,8 @@
 <main class="container mt-3">
     <div class="row mt-5">
         <div class="col-10 col-md-6 offset-1 offset-md-3 mb-3">
-            <form method="post" class="card mb-3">
+            <form method="post" class="card mb-3 needs-validation">
+                {{ params.form.csrf_token }}
                 <div class="card-body text-center pt-5">
                     <img src="{{ params.teacher.picture }}" class="mb-3" width="95" alt="{{ params.teacher.name }}">
                     <h2 class="h5 card-title mt-2 mb-2">{{ params.teacher.name }}</h2>
@@ -12,21 +13,33 @@
                     <p class="my-1">{{ params.day.title }}, {{ params.hour }}:00</p>
                 </div>
                 <hr/>
+
                 <div class="card-body mx-3">
                     <div class="row">
-                        <input class="form-control" type="hidden" name="clientWeekday" value="{{ params.day.id }}">
-                        <input class="form-control" type="hidden" name="clientTime" value="{{ params.hour }}">
-                        <input class="form-control" type="hidden" name="clientTeacher" value="{{ params.teacher.id }}">
+                        {{ params.form.clientWeekday(value=params.day.id) }}
+                        {{ params.form.clientTime(value=params.hour) }}
+                        {{ params.form.clientTeacher(value=params.teacher.id ) }}
                     </div>
 
-                    <label class="mb-1 mt-2" for="clientName">Вас зовут</label>
-                    <input class="form-control" type="text" name="clientName" id="clientName" required>
+                    <div class="row">
+                        {{ params.form.clientName.label(class='mb-1 mt-2') }}
+                        {{ params.form.clientName(class='form-control') }}
 
-                    <label class="mb-1 mt-2" for="clientPhone">Ваш телефон</label>
-                    <input class="form-control" type="tel" name="clientPhone" id="clientPhone" required>
+                        {% for error in params.form.clientName.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row">
+                        {{ params.form.clientPhone.label(class='mb-1 mt-2') }}
+                        {{ params.form.clientPhone(class='form-control', type='tel') }}
+
+                        {% for error in params.form.clientPhone.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
 
                     <input type="submit" class="btn btn-primary btn-block mt-4" value="Записаться на пробный урок">
-
                 </div>
             </form>
         </div>

@@ -6,5 +6,5 @@ services:
       - "5000:5000"
     volumes:
       - ./src:/app
-    environment:
-      FLASK_ENV: development
+    env_file:
+      .env
