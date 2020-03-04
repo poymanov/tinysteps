@@ -1,17 +1,10 @@
-import os
-
-from flask import Flask, render_template, request
-from flask_wtf.csrf import CSRFProtect
+from flask import render_template, request
 
 import services.feedback as feedback_service
 import services.goals as goals_service
 import services.view_helper as view_helper
+from common import app
 from forms import BookingForm, RequestForm
-
-app = Flask(__name__)
-app.secret_key = os.environ['SECRET_KEY']
-csrf = CSRFProtect(app)
-csrf.init_app(app)
 
 
 @app.route('/')
@@ -58,7 +51,7 @@ def teacher_request():
     form = RequestForm()
 
     if form.validate_on_submit():
-        feedback_service.save_teacher_request(request.form)
+        feedback_service.save_teacher_request(form)
         return render_template('request_done.html', params=view_helper.get_request_done_params(request))
     else:
         return render_template('request.html', params={'form': form})

@@ -1,6 +1,12 @@
-.PHONY : start stop logs flush init
+.PHONY : start stop logs flush init init_env migrate
 
 .DEFAULT_GOAL := start
+
+init_env:
+	cp .env.example .env
+
+migrate:
+	docker-compose run web flask db upgrade
 
 start:
 	docker-compose up -d
@@ -11,8 +17,7 @@ stop:
 logs:
 	docker-compose logs -f
 
-init:
-	cp .env.example .env
-
 flush:
 	docker-compose down -v --rmi all
+
+init: init_env migrate
