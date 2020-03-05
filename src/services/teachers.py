@@ -12,7 +12,7 @@ def get_random_teachers(count):
 
 
 def get_teacher_by_goal(goal):
-    return db.session.query(Teacher).filter(Teacher.goals.like('%{}%'.format(goal))).all()
+    return db.session.query(Teacher).filter(Teacher.goals.like('%{}%'.format(goal))).order_by(Teacher.rating.desc()).all()
 
 
 def get_teacher_by_id(teacher_id):
