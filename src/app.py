@@ -32,7 +32,7 @@ def booking(teacher_id, day_title, hour):
     form = BookingForm()
 
     if form.validate_on_submit():
-        feedback_service.save_teacher_booking(request.form)
+        feedback_service.save_teacher_booking(form)
         params = view_helper.get_booking_done_params(form)
         return render_template('booking_done.html', params=params)
     else:

@@ -1,5 +1,3 @@
-.PHONY : start stop logs flush init init_env migrate
-
 .DEFAULT_GOAL := start
 
 init_env:
@@ -20,4 +18,7 @@ logs:
 flush:
 	docker-compose down -v --rmi all
 
-init: init_env migrate
+import:
+	docker-compose run web python import.py
+
+init: init_env migrate import

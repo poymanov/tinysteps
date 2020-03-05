@@ -1,43 +1,31 @@
-import random
+import json
+
+from sqlalchemy import func
 
 import services.days as days_service
 import services.goals as goals_service
-import services.json_manager as json_manager
+from common import db, Teacher
 
 
 def get_random_teachers(count):
-    teachers = get_teachers()
-    return random.sample(teachers, count)
+    return db.session.query(Teacher).order_by(func.random()).limit(count).all()
 
 
 def get_teacher_by_goal(goal):
-    teachers = get_teachers()
-    goal_teachers = []
-
-    for teacher in teachers:
-        if goal not in teacher.get('goals'):
-            continue
-        goal_teachers.append(teacher)
-
-    return goal_teachers
+    return db.session.query(Teacher).filter(Teacher.goals.like('%{}%'.format(goal))).all()
 
 
 def get_teacher_by_id(teacher_id):
-    teachers = get_teachers()
-
-    for teacher in teachers:
-        if int(teacher.get('id')) == int(teacher_id):
-            return teacher
-
-    return None
+    return db.session.query(Teacher).get(teacher_id)
 
 
 def get_teacher_goals(teacher):
     goals = []
 
     all_goals = goals_service.get_goals()
+    teacher_goals = json.loads(teacher.goals)
 
-    for teacher_goal in teacher.get('goals'):
+    for teacher_goal in teacher_goals:
         goals.append(all_goals.get(teacher_goal).get('title'))
 
     return goals
@@ -46,7 +34,9 @@ def get_teacher_goals(teacher):
 def get_teacher_free_hours(teacher):
     free_hours = []
 
-    for id, teacher_day in teacher.get("free").items():
+    teacher_free_hours = json.loads(teacher.free)
+
+    for id, teacher_day in teacher_free_hours.items():
         day_info = days_service.get_day_by_id(id)
 
         if day_info is None:
@@ -63,7 +53,3 @@ def get_teacher_free_hours(teacher):
         free_hours.append(day_free_hours)
 
     return free_hours
-
-
-def get_teachers():
-    return json_manager.load_json(json_manager.read_json('data/teachers.json'))

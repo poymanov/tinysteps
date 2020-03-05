@@ -1,6 +1,3 @@
-import services.json_manager as json_manager
-
-
 def get_day_by_id(day_id):
     days = get_days()
 
@@ -22,4 +19,26 @@ def get_day_by_title(title):
 
 
 def get_days():
-    return json_manager.load_json(json_manager.read_json('data/days.json'))
+    return [
+        {
+            'id': 'mon', 'title': 'Понедельник', 'link_title': 'monday'
+        },
+        {
+            'id': 'tue', 'title': 'Вторник', 'link_title': 'tuesday'
+        },
+        {
+            'id': 'wed', 'title': 'Среда', 'link_title': 'wednesday'
+        },
+        {
+            'id': 'thu', 'title': 'Четверг', 'link_title': 'thursday'
+        },
+        {
+            'id': 'fri', 'title': 'Пятница', 'link_title': 'friday'
+        },
+        {
+            'id': 'sat', 'title': 'Суббота', 'link_title': 'saturday'
+        },
+        {
+            'id': 'sun', 'title': 'Воскресение', 'link_title': 'sun'
+        }
+    ]

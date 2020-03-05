@@ -1,10 +1,3 @@
-import services.json_manager as json_manager
-
-
-def get_goals():
-    return json_manager.load_json(json_manager.read_json('data/goals.json'))
-
-
 def get_goal(goal_id):
     goals = get_goals()
 
@@ -13,3 +6,12 @@ def get_goal(goal_id):
             return goal
 
     return None
+
+
+def get_goals():
+    return {
+        'travel': {'icon': '⛱', 'title': 'Для путешествий'},
+        'study': {'icon': '🏫', 'title': 'Для учебы'},
+        'work': {'icon': '🏢', 'title': 'Для работы'},
+        'relocate': {'icon': '🚜', 'title': 'Для переезда'}
+    }
