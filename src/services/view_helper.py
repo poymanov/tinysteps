@@ -20,6 +20,10 @@ def get_goal_params(goal_id):
 
 def get_profile_params(id):
     teacher = teachers_service.get_teacher_by_id(id)
+
+    if teacher is None:
+        return None
+
     goals = teachers_service.get_teacher_goals(teacher)
     free_hours = teachers_service.get_teacher_free_hours(teacher)
 
